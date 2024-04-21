@@ -10,7 +10,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toUri
+import com.ifs21035.lostfounds.R
+import com.ifs21035.lostfounds.data.local.entity.LostFoundEntity
 import com.ifs21035.lostfounds.data.model.LostFound
 import com.ifs21035.lostfounds.data.remote.MyResult
 import com.ifs21035.lostfounds.data.remote.response.LostFoundDetail
@@ -23,7 +24,9 @@ class LostFoundDetailActivity : AppCompatActivity() {
     private val viewModel by viewModels<LostFoundViewModel> {
         ViewModelFactory.getInstance(this)
     }
-    private var isChanged: Boolean = false
+    private var isFavorite: Boolean = false
+    private var lostfound: LostFoundEntity? = null
+
     private val launcher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -44,6 +47,12 @@ class LostFoundDetailActivity : AppCompatActivity() {
     }
     private fun setupAction() {
         val lostFoundId = intent.getIntExtra(KEY_LOSTFOUND_ID, 0)
+        val imageUriString = intent.getStringExtra(KEY_IMAGE_URI)
+        if (!imageUriString.isNullOrEmpty()) {
+            // Convert URI string back to URI and set it to ivLostFoundDetailImage
+            val imageUri = Uri.parse(imageUriString)
+            binding.ivLostFoundDetailImage.setImageURI(imageUri)
+        }
         if (lostFoundId == 0) {
             finish()
             return
@@ -51,14 +60,9 @@ class LostFoundDetailActivity : AppCompatActivity() {
         observeGetLostFound(lostFoundId)
         binding.appbarLostFoundDetail.setNavigationOnClickListener {
             val resultIntent = Intent()
-            resultIntent.putExtra(KEY_IS_CHANGED, isChanged)
+            resultIntent.putExtra(KEY_IS_CHANGED, true)
             setResult(RESULT_CODE, resultIntent)
             finishAfterTransition()
-        }
-        val imageUriString = intent.getStringExtra(KEY_IMAGE_URI)
-        if (!imageUriString.isNullOrEmpty()) {
-            val imageUri = Uri.parse(imageUriString)
-            binding.ivLostFoundDetailImage.setImageURI(imageUri)
         }
     }
     private fun observeGetLostFound(lostFoundId: Int) {
@@ -91,6 +95,16 @@ class LostFoundDetailActivity : AppCompatActivity() {
             tvLostFoundDetailDate.text = "Created at: ${lostFound.createdAt}"
             tvLostFoundDetailDesc.text = lostFound.description
             tvLostFoundDetailStatus.text = lostFound.status
+
+            viewModel.getLocalLostFound(lostFound.id).observeOnce {
+                if(it != null){
+                    lostfound = it
+                    setFavorite(true)
+                }else{
+                    setFavorite(false)
+                }
+            }
+
             cbLostFoundDetailIsCompleted.isChecked = lostFound.isCompleted == 1
             cbLostFoundDetailIsCompleted.setOnCheckedChangeListener { _, isChecked ->
                 viewModel.putLostFound(
@@ -130,14 +144,45 @@ class LostFoundDetailActivity : AppCompatActivity() {
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
-                            if ((lostFound.isCompleted == 1) != isChecked) {
-                                isChanged = true
-                            }
                         }
                         else -> {}
                     }
                 }
             }
+            ivLostFoundDetailActionFavorite.setOnClickListener {
+                if(isFavorite){
+                    setFavorite(false)
+                    if(lostfound != null){
+                        viewModel.deleteLocalTodo(lostfound!!)
+                    }
+                    Toast.makeText(
+                        this@LostFoundDetailActivity,
+                        "Lost found has been deleted from favorite list.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }else{
+                    lostfound = LostFoundEntity(
+                        id = lostFound.id,
+                        title = lostFound.title,
+                        description = lostFound.description,
+                        isCompleted = lostFound.isCompleted,
+                        cover = lostFound.cover,
+                        createdAt = lostFound.createdAt,
+                        updatedAt = lostFound.updatedAt,
+                        author = lostFound.author,
+                        status = lostFound.status,
+                        userId = lostFound.userId
+                    )
+                    setFavorite(true)
+                    viewModel.insertLocalTodo(lostfound!!)
+                    Toast.makeText(
+                        this@LostFoundDetailActivity,
+                        "Success adding lost found to favorite",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
             ivLostFoundDetailActionDelete.setOnClickListener {
                 val builder = AlertDialog.Builder(this@LostFoundDetailActivity)
                 builder.setTitle("Delete Lost Found")
@@ -168,11 +213,19 @@ class LostFoundDetailActivity : AppCompatActivity() {
                 intent.putExtra(LostFoundManageActivity.KEY_LOSTFOUND, lostfound)
                 launcher.launch(intent)
             }
-            if (!lostFound.cover.isNullOrEmpty()) {
-                ivLostFoundDetailImage.setImageURI(lostFound.cover.toUri())
-            }
         }
     }
+    private fun setFavorite(status: Boolean){
+        isFavorite = status
+        if(status){
+            binding.ivLostFoundDetailActionFavorite
+                .setImageResource(R.drawable.ic_favorite_24)
+        }else{
+            binding.ivLostFoundDetailActionFavorite
+                .setImageResource(R.drawable.ic_favorite_border_24)
+        }
+    }
+
     private fun observeDeleteTodo(todoId: Int) {
         showComponent(false)
         showLoading(true)

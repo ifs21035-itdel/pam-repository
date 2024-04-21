@@ -1,6 +1,7 @@
 package com.ifs21035.lostfounds.data.remote.response
 
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.RawValue
 
 data class LostFoundsResponse(
 
@@ -26,7 +27,7 @@ data class LostFoundsItemResponse(
 	val userId: Int,
 
 	@field:SerializedName("author")
-	val author: Authors,
+	val author: @RawValue Author?,
 
 	@field:SerializedName("description")
 	val description: String,
@@ -44,7 +45,7 @@ data class LostFoundsItemResponse(
 	var isCompleted: Int,
 
 	@field:SerializedName("status")
-	var status: String
+	var status: String,
 )
 
 data class Authors(

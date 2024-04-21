@@ -22,6 +22,7 @@ import com.ifs21035.lostfounds.presentation.ViewModelFactory
 import com.ifs21035.lostfounds.presentation.login.LoginActivity
 import com.ifs21035.lostfounds.presentation.profile.ProfileActivity
 import com.ifs21035.lostfounds.presentation.lostfound.LostFoundDetailActivity
+import com.ifs21035.lostfounds.presentation.lostfound.LostFoundFavoriteActivity
 import com.ifs21035.lostfounds.presentation.lostfound.LostFoundManageActivity
 
 class MainActivity : AppCompatActivity() {
@@ -68,6 +69,10 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.mainMenuProfile -> {
                     openProfileActivity()
+                    true
+                }
+                R.id.mainMenuFavoriteLostFounds -> {
+                    openFavoriteLostFoundActivity()
                     true
                 }
                 R.id.mainMenuLogout -> {
@@ -117,12 +122,14 @@ class MainActivity : AppCompatActivity() {
             layoutManager.orientation
         )
         binding.rvMainLostFounds.addItemDecoration(itemDecoration)
+
         if (lostFounds.isEmpty()) {
             showEmptyError(true)
             binding.rvMainLostFounds.adapter = null
         } else {
             showComponentNotEmpty(true)
             showEmptyError(false)
+
             val adapter = LostFoundsAdapter()
             adapter.submitOriginalList(lostFounds)
             binding.rvMainLostFounds.adapter = adapter
@@ -229,4 +236,12 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra(LostFoundManageActivity.KEY_IS_ADD, true)
         launcher.launch(intent)
     }
+    private fun openFavoriteLostFoundActivity() {
+        val intent = Intent(
+            this@MainActivity,
+            LostFoundFavoriteActivity::class.java
+        )
+        launcher.launch(intent)
+    }
+
 }

@@ -105,9 +105,9 @@ class LostFoundManageActivity : AppCompatActivity() {
                 }
                 is MyResult.Success -> {
                     showLoading(false)
-                    val resultIntent = Intent(this, LostFoundDetailActivity::class.java).apply {
-                        putExtra(KEY_STATUS, status) // Pass the status here
-                        putExtra(LostFoundDetailActivity.KEY_IMAGE_URI, selectedImageUri?.toString())
+                    val resultIntent = Intent().apply {
+                        putExtra(KEY_STATUS, status)
+                        putExtra(LostFoundDetailActivity.KEY_IMAGE_URI, selectedImageUri?.toString()) // Pass the image URI here
                     }
                     setResult(RESULT_CODE, resultIntent)
                     finishAfterTransition()
@@ -125,6 +125,7 @@ class LostFoundManageActivity : AppCompatActivity() {
             }
         }
     }
+
     private fun manageEditLostFound(lostFound: LostFound) {
         binding.apply {
             appbarLostFoundManage.title = "Change Lost Found"
@@ -169,7 +170,10 @@ class LostFoundManageActivity : AppCompatActivity() {
                 }
                 is MyResult.Success -> {
                     showLoading(false)
-                    val resultIntent = Intent()
+                    val resultIntent = Intent().apply{
+                        putExtra(KEY_STATUS, status) // Pass the status here
+                        putExtra(LostFoundDetailActivity.KEY_IMAGE_URI, selectedImageUri?.toString())
+                    }
                     setResult(RESULT_CODE, resultIntent)
                     finishAfterTransition()
                 }
