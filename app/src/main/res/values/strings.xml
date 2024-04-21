@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Lost &amp; Founds</string>
+    <string name="login_title">Login</string>
+    <string name="btnLogin">Login!</string>
+    <string name="email_title">Email</string>
+    <string name="password_title">Password</string>
+    <string name="login_hint">Please login using your account!</string>
+    <string name="email_hint">Please enter your email.</string>
+    <string name="password_hint">Please enter your password.</string>
+    <string name="account">No account? Sign in here!</string>
+    <string name="lostFound_title">LostFound Title</string>
+    <string name="register_title">Register</string>
+    <string name="register_hint">Please create your account!</string>
+    <string name="name">Name</string>
+    <string name="name_hint">Insert your full name</string>
+    <string name="btnRegister">Register!</string>
+    <string name="has_account">Already have account? Login here!</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="status">Status</string>
+    <string name="image">Add Image</string>
+    <string name="btnSave">Save</string>
+    <string name="date">Created at: </string>
+    <string name="no_lost_found">No Lost or Found</string>
+</resources>
