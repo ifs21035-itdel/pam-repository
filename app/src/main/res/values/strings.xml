@@ -18,8 +18,11 @@
     <string name="title">Title</string>
     <string name="description">Description</string>
     <string name="status">Status</string>
-    <string name="image">Add Image</string>
+    <string name="btnAddImage">Add Image</string>
     <string name="btnSave">Save</string>
     <string name="date">Created at: </string>
     <string name="no_lost_found">No Lost or Found</string>
+    <string name="btnCamera">Camera</string>
+    <string name="btnGallery">Gallery</string>
+    <string name="change">Change Photo Profile</string>
 </resources>

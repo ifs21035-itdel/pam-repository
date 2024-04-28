@@ -47,11 +47,17 @@ interface IApiService {
     ): LostFoundAddResponse
 
     @Multipart
-    @POST
-    suspend fun postCoverLostFound(
-        @Header("Authorization") token: String,
+    @POST("lost-founds/{id}/cover")
+    suspend fun addCoverLostFound(
+        @Path("id") lostFoundId: Int,
         @Part cover: MultipartBody.Part
-    )
+    ): LostFoundResponse
+
+    @Multipart
+    @POST("users/photo")
+    suspend fun addPhotoProfile(
+        @Part cover:MultipartBody.Part
+    ): LostFoundResponse
 
     @FormUrlEncoded
     @PUT("lost-founds/{id}")

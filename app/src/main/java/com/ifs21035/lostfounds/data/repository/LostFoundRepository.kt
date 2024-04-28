@@ -5,6 +5,7 @@ import com.ifs21035.lostfounds.data.remote.MyResult
 import com.ifs21035.lostfounds.data.remote.response.LostFoundResponse
 import com.ifs21035.lostfounds.data.remote.retrofit.IApiService
 import kotlinx.coroutines.flow.flow
+import okhttp3.MultipartBody
 import retrofit2.HttpException
 
 class LostFoundRepository private constructor(
@@ -128,6 +129,28 @@ class LostFoundRepository private constructor(
             )
         }
     }
+
+    fun addCoverLostFound(
+        lostFoundId: Int,
+        cover: MultipartBody.Part,
+    )= flow {
+        emit(MyResult.Loading)
+        try {
+            //get success message
+            emit(MyResult.Success(apiService.addCoverLostFound(lostFoundId, cover)))
+        } catch (e: HttpException) {
+            //get error message
+            val jsonInString = e.response()?.errorBody()?.string()
+            emit(
+                MyResult.Error(
+                    Gson()
+                        .fromJson(jsonInString, LostFoundResponse::class.java)
+                        .message
+                )
+            )
+        }
+    }
+
     companion object {
         @Volatile
         private var INSTANCE: LostFoundRepository? = null
@@ -143,3 +166,4 @@ class LostFoundRepository private constructor(
         }
     }
 }
+

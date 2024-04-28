@@ -10,6 +10,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.ifs21035.lostfounds.R
 import com.ifs21035.lostfounds.data.local.entity.LostFoundEntity
 import com.ifs21035.lostfounds.data.model.LostFound
@@ -47,12 +48,6 @@ class LostFoundDetailActivity : AppCompatActivity() {
     }
     private fun setupAction() {
         val lostFoundId = intent.getIntExtra(KEY_LOSTFOUND_ID, 0)
-        val imageUriString = intent.getStringExtra(KEY_IMAGE_URI)
-        if (!imageUriString.isNullOrEmpty()) {
-            // Convert URI string back to URI and set it to ivLostFoundDetailImage
-            val imageUri = Uri.parse(imageUriString)
-            binding.ivLostFoundDetailImage.setImageURI(imageUri)
-        }
         if (lostFoundId == 0) {
             finish()
             return
@@ -95,6 +90,16 @@ class LostFoundDetailActivity : AppCompatActivity() {
             tvLostFoundDetailDate.text = "Created at: ${lostFound.createdAt}"
             tvLostFoundDetailDesc.text = lostFound.description
             tvLostFoundDetailStatus.text = lostFound.status
+
+            if(lostFound.cover != null){
+                ivLostFoundDetailCover.visibility = View.VISIBLE
+                Glide.with(this@LostFoundDetailActivity)
+                    .load(lostFound.cover)
+                    .placeholder(R.drawable.ic_image_24)
+                    .into(ivLostFoundDetailCover)
+            }else{
+                ivLostFoundDetailCover.visibility = View.GONE
+            }
 
             viewModel.getLocalLostFound(lostFound.id).observeOnce {
                 if(it != null){

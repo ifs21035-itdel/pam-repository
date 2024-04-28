@@ -109,7 +109,7 @@
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ivLostFoundManageImage" />
+                app:layout_constraintTop_toBottomOf="@+id/ivLostFoundManageCover" />
 
             <ProgressBar
                 android:id="@+id/pbLostFoundManage"
@@ -126,13 +126,14 @@
                 android:id="@+id/btnAddImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/image"
+                android:text="@string/btnAddImage"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etLostFoundManageStatus" />
 
             <ImageView
-                android:id="@+id/ivLostFoundManageImage"
+                android:id="@+id/ivLostFoundManageCover"
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -148,6 +149,16 @@
                 android:text="@string/status"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etLostFoundManageDesc" />
+
+            <Button
+                android:id="@+id/btnCamera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/btnCamera"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etLostFoundManageStatus" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </LinearLayout>

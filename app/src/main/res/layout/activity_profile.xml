@@ -41,6 +41,36 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/email_title" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="@string/change"
+            android:layout_gravity="center"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnProfileCamera"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="16dp"
+            android:text="@string/btnCamera" />
+
+        <Button
+            android:id="@+id/btnProfileGallery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="16dp"
+            android:text="@string/btnGallery" />
     </LinearLayout>
     <ImageView
         android:id="@+id/ivProfileBack"
@@ -52,6 +82,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_arrow_back_24"
         android:contentDescription="@string/name" />
+
     <ProgressBar
         android:id="@+id/pbProfile"
         style="?android:attr/progressBarStyle"
@@ -61,4 +92,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
