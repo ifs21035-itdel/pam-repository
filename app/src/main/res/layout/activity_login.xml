@@ -102,6 +102,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
+            android:background="@drawable/custom_button"
             android:padding="15dp"
             android:text="@string/btnLogin"
             android:textSize="16sp"

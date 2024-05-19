@@ -25,4 +25,5 @@
     <string name="btnCamera">Camera</string>
     <string name="btnGallery">Gallery</string>
     <string name="change">Change Photo Profile</string>
+    <string name="settings">Settings</string>
 </resources>

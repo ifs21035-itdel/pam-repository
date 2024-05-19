@@ -15,7 +15,7 @@
             android:id="@+id/appbarLostFoundDetail"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#0188A4"
+            android:background="#000000"
             app:navigationIcon="@drawable/ic_arrow_back_24"
             app:navigationIconTint="@color/white"
             app:title="Lost Found Detail"
@@ -93,6 +93,8 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
                     android:text="@string/status"
+                    android:textColor="#0088FF"
+                    android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvLostFoundDetailDesc" />
@@ -123,7 +125,7 @@
                 android:id="@+id/textView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tindakan"
+                android:text="@string/settings"
                 android:textColor="#AAAAAA" />
             <LinearLayout
                 android:layout_width="match_parent"

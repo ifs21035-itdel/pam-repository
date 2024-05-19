@@ -114,7 +114,7 @@ class LostFoundManageActivity : AppCompatActivity() {
                 is MyResult.Error -> {
                     AlertDialog.Builder(this@LostFoundManageActivity).apply {
                         setTitle("Oh No!")
-                        setMessage(result.error)
+                        setMessage("Invalid Data")
                         setPositiveButton("Ok") { _, _ -> }
                         create()
                         show()
